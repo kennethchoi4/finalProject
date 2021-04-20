@@ -34,4 +34,23 @@ public final class Entity
         this.actionPeriod = actionPeriod;
         this.animationPeriod = animationPeriod;
     }
+
+    public int getAnimationPeriod() {
+        if (this.kind.equals(EntityKind.MINER_FULL) || this.kind.equals(EntityKind.MINER_NOT_FULL) || this.kind.equals(EntityKind.ORE_BLOB) || this.kind.equals(EntityKind.QUAKE)){
+            return this.animationPeriod;
+        } else{
+            throw new UnsupportedOperationException(
+                    String.format("getAnimationPeriod not supported for %s",
+                            this.kind));
+        }
+    }
+
+    public void nextImage() {
+        this.imageIndex = (this.imageIndex + 1) % this.images.size();
+    }
+
+    public PImage getCurrentImage() {
+        return (this.images.get((this).imageIndex));
+    }
+
 }

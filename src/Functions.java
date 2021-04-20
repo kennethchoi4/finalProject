@@ -79,38 +79,11 @@ public final class Functions
     public static final int VEIN_ACTION_PERIOD = 4;
 
 
-    public static PImage getCurrentImage(Object entity) {
-        if (entity instanceof Background) {
-            return ((Background)entity).images.get(
-                    ((Background)entity).imageIndex);
-        }
-        else if (entity instanceof Entity) {
-            return ((Entity)entity).images.get(((Entity)entity).imageIndex);
-        }
-        else {
-            throw new UnsupportedOperationException(
-                    String.format("getCurrentImage not supported for %s",
-                                  entity));
-        }
-    }
 
-    public static int getAnimationPeriod(Entity entity) {
-        switch (entity.kind) {
-            case MINER_FULL:
-            case MINER_NOT_FULL:
-            case ORE_BLOB:
-            case QUAKE:
-                return entity.animationPeriod;
-            default:
-                throw new UnsupportedOperationException(
-                        String.format("getAnimationPeriod not supported for %s",
-                                      entity.kind));
-        }
-    }
 
-    public static void nextImage(Entity entity) {
-        entity.imageIndex = (entity.imageIndex + 1) % entity.images.size();
-    }
+
+
+
 
     public static void executeAction(Action action, EventScheduler scheduler) {
         switch (action.kind) {
@@ -127,14 +100,14 @@ public final class Functions
     public static void executeAnimationAction(
             Action action, EventScheduler scheduler)
     {
-        nextImage(action.entity);
+        action.entity.nextImage();
 
         if (action.repeatCount != 1) {
             scheduleEvent(scheduler, action.entity,
                           createAnimationAction(action.entity,
                                                 Math.max(action.repeatCount - 1,
                                                          0)),
-                          getAnimationPeriod(action.entity));
+                          action.entity.getAnimationPeriod());
         }
     }
 
@@ -315,7 +288,7 @@ public final class Functions
                               entity.actionPeriod);
                 scheduleEvent(scheduler, entity,
                               createAnimationAction(entity, 0),
-                              getAnimationPeriod(entity));
+                              entity.getAnimationPeriod());
                 break;
 
             case MINER_NOT_FULL:
@@ -324,7 +297,7 @@ public final class Functions
                               entity.actionPeriod);
                 scheduleEvent(scheduler, entity,
                               createAnimationAction(entity, 0),
-                              getAnimationPeriod(entity));
+                              entity.getAnimationPeriod());
                 break;
 
             case ORE:
@@ -339,7 +312,7 @@ public final class Functions
                               entity.actionPeriod);
                 scheduleEvent(scheduler, entity,
                               createAnimationAction(entity, 0),
-                              getAnimationPeriod(entity));
+                              entity.getAnimationPeriod());
                 break;
 
             case QUAKE:
@@ -348,7 +321,7 @@ public final class Functions
                               entity.actionPeriod);
                 scheduleEvent(scheduler, entity, createAnimationAction(entity,
                                                                        QUAKE_ANIMATION_REPEAT_COUNT),
-                              getAnimationPeriod(entity));
+                              entity.getAnimationPeriod());
                 break;
 
             case VEIN:
@@ -851,10 +824,10 @@ public final class Functions
         }
         else {
             Entity nearest = entities.get(0);
-            int nearestDistance = distanceSquared(nearest.position, pos);
+            int nearestDistance = Point.distanceSquared(nearest.position, pos);
 
             for (Entity other : entities) {
-                int otherDistance = distanceSquared(other.position, pos);
+                int otherDistance = Point.distanceSquared(other.position, pos);
 
                 if (otherDistance < nearestDistance) {
                     nearest = other;
@@ -866,12 +839,7 @@ public final class Functions
         }
     }
 
-    public static int distanceSquared(Point p1, Point p2) {
-        int deltaX = p1.x - p2.x;
-        int deltaY = p1.y - p2.y;
 
-        return deltaX * deltaX + deltaY * deltaY;
-    }
 
     public static Optional<Entity> findNearest(
             WorldModel world, Point pos, EntityKind kind)
@@ -927,7 +895,7 @@ public final class Functions
             WorldModel world, Point pos)
     {
         if (withinBounds(world, pos)) {
-            return Optional.of(getCurrentImage(getBackgroundCell(world, pos)));
+            return Optional.of(Background.getCurrentImage(getBackgroundCell(world, pos)));
         }
         else {
             return Optional.empty();
@@ -1012,7 +980,7 @@ public final class Functions
 
             if (contains(view.viewport, pos)) {
                 Point viewPoint = worldToViewport(view.viewport, pos.x, pos.y);
-                view.screen.image(getCurrentImage(entity),
+                view.screen.image(entity.getCurrentImage(),
                                   viewPoint.x * view.tileWidth,
                                   viewPoint.y * view.tileHeight);
             }
