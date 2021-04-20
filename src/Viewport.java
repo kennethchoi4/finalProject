@@ -1,30 +1,46 @@
 public final class Viewport
 {
-    public int row;
-    public int col;
-    public int numRows;
-    public int numCols;
+    private int row;
+    private int col;
+    private int numRows;
+    private int numCols;
 
     public Viewport(int numRows, int numCols) {
         this.numRows = numRows;
         this.numCols = numCols;
     }
 
-    public static void shift(Viewport viewport, int col, int row) {
-        viewport.col = col;
-        viewport.row = row;
+    public int row() {
+        return row;
     }
 
-    public static boolean contains(Viewport viewport, Point p) {
-        return p.y >= viewport.row && p.y < viewport.row + viewport.numRows
-                && p.x >= viewport.col && p.x < viewport.col + viewport.numCols;
+    public int col() {
+        return col;
     }
 
-    public static Point viewportToWorld(Viewport viewport, int col, int row) {
-        return new Point(col + viewport.col, row + viewport.row);
+    public int numRows() {
+        return numRows;
     }
 
-    public static Point worldToViewport(Viewport viewport, int col, int row) {
-        return new Point(col - viewport.col, row - viewport.row);
+    public int numCols() {
+        return numCols;
+    }
+
+    public void shift(int col, int row) {
+        this.col = col;
+        this.row = row;
+    }
+
+    public boolean contains(Point p) {
+        return p.y >= this.row && p.y < this.row + this.numRows
+                && p.x >= this.col && p.x < this.col + this.numCols;
+    }
+
+    public Point viewportToWorld(int col, int row) {
+        return new Point(col + this.col, row + this.row);
+    }
+
+    public Point worldToViewport(int col, int row) {
+        return new Point(col - this.col, row - this.row);
     }
 }
