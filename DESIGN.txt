@@ -1,0 +1,53 @@
+Kenneth Choi
+CPE 203
+                                    
+
+1. findOpenAround()
+  - I felt that this method could be placed in both Point and WorldModel because it was accessing the point's 
+    attributes while checking the world to see if there was an pen point
+  - I chose to put this function in the WorldModel class because in the bigger picture, the method is checking
+    the world to see if there is an available point, so I figured it would make more sense to put in WorldModel
+    
+2. adjacent()
+  - I chose to leave this method in the Functions class because it is accessing two Point obejcts, and figured
+    that it was more of a utility function that could be accessed from the full list of Functions rather than 
+    making it a static function in the Point class
+
+3. getImages()
+
+  - I felt that this method could go in teh ImageStore class or the Functions class due to its name, but its
+    lack of ImageStore objects
+  - I chose to leave the function in the Functions class because it doesn't interact with a ImageStore object 
+    at all, and even though it is related to images, I felt that there might be a future class that would
+    interact with the method properly
+    
+4. processImageLine()
+  - This method does not interact with an objects in any of the class, and definitely no their variables, thus 
+    I left it in the Functions class. I felt that there could potentially be a class in the future that has one 
+    of the method's parameters as an object
+    
+5. getImages()
+  - Much like the method above, it didn't access any specific Class obejct's attributes, so I felt that it 
+  didn't belong in any of the classes. 
+ 
+ 
+6. setAlpha()
+  - This method doesn't interact with any of the classes, rather it takes in a PImage and upadtes the image's 
+    colors. This seems like it could be in a future class that we create surroudning changing the colors and 
+    designs of things
+    
+
+7. load()
+  - I chose to leave this methods in the Functions class because it does not access any Objects, rather it 
+    traverses through a list and calls the parse functions based on the case of each element in the List
+   
+   
+8. parse*()
+  - I left all of the parse methods in the Functions class because they were calling on a parseInt method that
+    I simply didn't understand. Since I didn't understand its functionality and how it adjusted the game, 
+    I didn't feel as if it would fit in another class
+    
+
+9. create*()
+  - I left all of the create methods because they are simply creating entities, but not accessing any Entity 
+    objects or even the class
