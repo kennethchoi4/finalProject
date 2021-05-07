@@ -5,6 +5,7 @@ public final class EventScheduler
     private PriorityQueue<Event> eventQueue;
     private Map<Entity, List<Event>> pendingEvents;
     private double timeScale;
+    private static final int QUAKE_ANIMATION_REPEAT_COUNT = 10;
 
     public EventScheduler(double timeScale) {
         this.eventQueue = new PriorityQueue<>(new EventComparator());
@@ -60,4 +61,5 @@ public final class EventScheduler
             next.action().executeAction(this);
         }
     }
+
 }
