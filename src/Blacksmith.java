@@ -1,10 +1,7 @@
 import processing.core.PImage;
 import java.util.*;
 
-public class Blacksmith implements Entity{
-    private String id;
-    private Point position;
-    private List<PImage> images;
+public class Blacksmith extends Entity{
 
     public Blacksmith(
             String id,
@@ -12,18 +9,13 @@ public class Blacksmith implements Entity{
             List<PImage> images
             )
     {
-        this.id = id;
-        this.position = position;
-        this.images = images;
+        super(id, position, images);
 
     }
 
 
-    public Point position() { return this.position;}
-    public void setPosition(Point position) {
-        this.position = position;
-    }
-    public void nextImage() { }
-    public PImage getCurrentImage() { return images.get(0); }
+    //public Point position() { return this.position;}
+    //public void setPosition(Point position) { this.position = position; }
+    //public PImage getCurrentImage() { return getImages().get(0); }
 
 }

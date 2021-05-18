@@ -1,10 +1,10 @@
 public class Activity implements Action{
-    private Entity entity;
+    private ActiveEntity entity;
     private WorldModel world;
     private ImageStore imageStore;
 
     public Activity(
-            Entity entity,
+            ActiveEntity entity,
             WorldModel world,
             ImageStore imageStore)
     {
@@ -22,10 +22,8 @@ public class Activity implements Action{
 //            System.out.println("catch: " + entity.getClass().toString());
 //        }
 
-        if (this.entity instanceof Executable) {
-            Executable e = (Executable)this.entity;
-            e.executeActivity(this.world, this.imageStore, scheduler);
-        }
+        this.entity.executeActivity(this.world, this.imageStore, scheduler);
+
 
         /* switch (this.entity.kind()) {
             case MINER_FULL:

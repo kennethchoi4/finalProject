@@ -5,12 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public class Vein implements Executable{
-    private String id;
-    private Point position;
-    private List<PImage> images;
-    private int imageIndex;
-    private int actionPeriod;
+public class Vein extends ActiveEntity{
 
 
     private static final String ORE_ID_PREFIX = "ore -- ";
@@ -26,35 +21,21 @@ public class Vein implements Executable{
             List<PImage> images,
             int actionPeriod)
     {
-        this.id = id;
-        this.position = position;
-        this.images = images;
-        this.imageIndex = 0;
-        this.actionPeriod = actionPeriod;
+        super(id, position, images, actionPeriod);
     }
 
 
-    public Point position() {
-        return position;
-    }
+    // public Point position() { return position;}
 
-    public void setPosition(Point position) {
-        this.position = position;
-    }
+   // public void setPosition(Point position) { this.position = position; }
 
-    public int actionPeriod() {
-        return actionPeriod;
-    }
+    //public int actionPeriod() { return actionPeriod; }
 
-    public int getAnimationPeriod() { return 0;}
+    //public int getAnimationPeriod() { return 0;}
 
-    public void nextImage() {
-        this.imageIndex = (this.imageIndex + 1) % this.images.size();
-    }
+    //public void nextImage() { this.imageIndex = (this.imageIndex + 1) % this.images.size(); }
 
-    public PImage getCurrentImage() {
-        return (this.images.get((this).imageIndex));
-    }
+    // public PImage getCurrentImage() { return (this.images.get((this).imageIndex)); }
 
 
     public void executeActivity(
@@ -62,23 +43,25 @@ public class Vein implements Executable{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        Optional<Point> openPt = world.findOpenAround(this.position);
+        Optional<Point> openPt = world.findOpenAround(this.position());
 
         if (openPt.isPresent()) {
-            Entity ore = Factory.createOre(ORE_ID_PREFIX + this.id, openPt.get(),
+            Ore ore = Factory.createOre(ORE_ID_PREFIX + this.getId(), openPt.get(),
                     ORE_CORRUPT_MIN + rand.nextInt(
                             ORE_CORRUPT_MAX - ORE_CORRUPT_MIN),
                     imageStore.getImageList(Functions.oreKey()));
             world.addEntity(ore);
-            ((Executable)ore).scheduleActions(scheduler, world, imageStore);
+            ore.scheduleActions(scheduler, world, imageStore);
         }
 
         scheduler.scheduleEvent(this,
                 Factory.createActivityAction(this, world, imageStore),
-                this.actionPeriod);
+                this.actionPeriod());
     }
 
+    /*
     public void scheduleActions(
+
             EventScheduler scheduler,
             WorldModel world,
             ImageStore imageStore)
@@ -86,5 +69,7 @@ public class Vein implements Executable{
         scheduler.scheduleEvent(this,
                 Factory.createActivityAction(this, world, imageStore),
                 this.actionPeriod());
+
     }
+     */
 }

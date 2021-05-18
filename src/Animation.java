@@ -1,9 +1,9 @@
 public class Animation implements Action{
-    private Executable entity;
+    private AnimatedEntity entity;
     private int repeatCount;
 
     public Animation(
-            Executable entity,
+            AnimatedEntity entity,
             int repeatCount)
     {
         this.entity = entity;

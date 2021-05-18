@@ -4,13 +4,7 @@ import processing.core.PImage;
 import java.util.List;
 
 
-public class Quake implements Executable{
-    private String id;
-    private Point position;
-    private List<PImage> images;
-    private int imageIndex;
-    private int actionPeriod;
-    private int animationPeriod;
+public class Quake extends AnimatedEntity{
     private static final int QUAKE_ANIMATION_REPEAT_COUNT = 10;
 
     public Quake(
@@ -20,15 +14,10 @@ public class Quake implements Executable{
             int actionPeriod,
             int animationPeriod)
     {
-        this.id = id;
-        this.position = position;
-        this.images = images;
-        this.imageIndex = 0;
-        this.actionPeriod = actionPeriod;
-        this.animationPeriod = animationPeriod;
+        super(id, position, images, actionPeriod, animationPeriod);
     }
 
-
+    /*
     public Point position() {
         return position;
     }
@@ -41,17 +30,12 @@ public class Quake implements Executable{
         return actionPeriod;
     }
 
-    public int getAnimationPeriod() {
-        return this.animationPeriod;
-    }
+    public int getAnimationPeriod() { return this.animationPeriod;}
+    */
 
-    public void nextImage() {
-        this.imageIndex = (this.imageIndex + 1) % this.images.size();
-    }
+    //public void nextImage() {this.imageIndex = (this.imageIndex + 1) % this.images.size(); }
 
-    public PImage getCurrentImage() {
-        return (this.images.get((this).imageIndex));
-    }
+    //public PImage getCurrentImage() { return (this.images.get((this).imageIndex)); }
 
 
     public void executeActivity(
@@ -68,9 +52,12 @@ public class Quake implements Executable{
             WorldModel world,
             ImageStore imageStore)
     {
+        /*
         scheduler.scheduleEvent(this,
                 Factory.createActivityAction(this, world, imageStore),
                 this.actionPeriod());
+         */
+        super.scheduleActions(scheduler, world, imageStore);
         scheduler.scheduleEvent(this, Factory.createAnimationAction(this,
                 QUAKE_ANIMATION_REPEAT_COUNT),
                 this.getAnimationPeriod());
