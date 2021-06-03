@@ -1,5 +1,7 @@
 import processing.core.PImage;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.BiPredicate;
 
 public abstract class MinerEntity extends MovingEntity{
     private int resourceLimit;
@@ -17,6 +19,7 @@ public abstract class MinerEntity extends MovingEntity{
     public void addResourceCount(int num) {this.resourceCount += num;}
 
     public Point nextPositionMiner(WorldModel world, Point destPos) {
+        /*
         int horiz = Integer.signum(destPos.x - this.position().x);
         int vert = Integer.signum(destPos.y - this.position().y);
 
@@ -36,6 +39,20 @@ public abstract class MinerEntity extends MovingEntity{
         }
 
         return newPos;
+        */
+
+
+        Predicate<Point> params = (Point point) -> (!(world.isOccupied(point)) && world.withinBounds(point));
+        BiPredicate<Point, Point> reach = Functions::adjacent;
+        AStarPathingStrategy strat = new AStarPathingStrategy();
+
+        List<Point> path = strat.computePath(this.position(), destPos, params, reach, PathingStrategy.CARDINAL_NEIGHBORS);
+
+        if (path.size() == 0) {return this.position();}
+
+        return path.get(0);
+
+
     }
 
 

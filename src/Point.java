@@ -30,4 +30,9 @@ public final class Point
 
         return deltaX * deltaX + deltaY * deltaY;
     }
+
+    public double hVal(Point end)
+    {
+        return Math.sqrt(Math.pow(this.x - end.x, 2) + Math.pow(this.y - end.y, 2) * 1.00);
+    }
 }

@@ -52,7 +52,7 @@ public final class WorldModel
         }
     }
 
-    private boolean withinBounds(Point pos) {
+    public boolean withinBounds(Point pos) {
         return pos.y >= 0 && pos.y < this.numRows && pos.x >= 0
                 && pos.x < this.numCols;
     }
