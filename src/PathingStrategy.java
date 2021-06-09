@@ -23,9 +23,9 @@ interface PathingStrategy
    static final Function<Point, Stream<Point>> CARDINAL_NEIGHBORS =
       point ->
          Stream.<Point>builder()
-            .add(new Point(point.x, point.y - 1))
-            .add(new Point(point.x, point.y + 1))
-            .add(new Point(point.x - 1, point.y))
-            .add(new Point(point.x + 1, point.y))
+            .add(new Point(point.x, point.y - 1, false))
+            .add(new Point(point.x, point.y + 1, false))
+            .add(new Point(point.x - 1, point.y, false))
+            .add(new Point(point.x + 1, point.y, false))
             .build();
 }

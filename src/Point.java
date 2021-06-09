@@ -2,10 +2,12 @@ public final class Point
 {
     public final int x;
     public final int y;
+    public boolean isLava;
 
-    public Point(int x, int y) {
+    public Point(int x, int y, boolean isLava) {
         this.x = x;
         this.y = y;
+        this.isLava = isLava;
     }
 
     public String toString() {

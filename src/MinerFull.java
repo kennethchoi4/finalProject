@@ -171,6 +171,6 @@ public class MinerFull extends MinerEntity{
             scheduler.scheduleEvent(this,
                     Factory.createAnimationAction(this, 0),
                     this.getAnimationPeriod());
-            }
+        }
 
 }

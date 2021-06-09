@@ -144,7 +144,7 @@ public final class WorldModel
     public Optional<Point> findOpenAround(Point pos) {
         for (int dy = -ORE_REACH; dy <= ORE_REACH; dy++) {
             for (int dx = -ORE_REACH; dx <= ORE_REACH; dx++) {
-                Point newPt = new Point(pos.x + dx, pos.y + dy);
+                Point newPt = new Point(pos.x + dx, pos.y + dy, pos.isLava);
                 if (this.withinBounds(newPt) && !this.isOccupied(newPt)) {
                     return Optional.of(newPt);
                 }
@@ -153,4 +153,8 @@ public final class WorldModel
 
         return Optional.empty();
     }
+
+    //ALL NEW METHODS FOR MOUSE CLICK EVENT
+
+
 }
