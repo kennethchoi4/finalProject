@@ -8,6 +8,7 @@ import processing.core.PApplet;
 
 public final class Functions
 {
+    public static final String LAVA_KEY = "lava";
     public static final String QUAKE_ID = "quake";
     public static final int QUAKE_ACTION_PERIOD = 1100;
     public static final int QUAKE_ANIMATION_PERIOD = 100;

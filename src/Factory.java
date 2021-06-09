@@ -45,6 +45,28 @@ public class Factory {
                           resourceLimit, 0, actionPeriod, animationPeriod);
     }
 
+    public static Skeleton createSkeleton(
+            String id,
+            Point position,
+            int actionPeriod,
+            int animationPeriod,
+            List<PImage> images)
+    {
+        return new Skeleton(id, position, images, actionPeriod,
+                animationPeriod);
+    }
+
+    public static LavaHound createLavaHound(
+            String id,
+            Point position,
+            int actionPeriod,
+            int animationPeriod,
+            List<PImage> images)
+    {
+        return new LavaHound(id, position, images, actionPeriod,
+                animationPeriod);
+    }
+
     public static Obstacle createObstacle(
             String id, Point position, List<PImage> images)
     {

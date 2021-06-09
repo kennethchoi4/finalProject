@@ -30,3 +30,11 @@ dirt images/dirt.bmp
 vein images/vein.bmp
 background_default images/none.bmp
 lava images/lava.bmp
+skeleton images/skeleton1.bmp 255 255 255 0
+skeleton images/skeleton2.bmp 255 255 255 0
+skeleton images/skeleton3.bmp 255 255 255 0
+skeleton images/skeleton4.bmp 255 255 255 0
+lavahound images/lavahound1.bmp 255 255 255 0
+lavahound images/lavahound2.bmp 255 255 255 0
+lavahound images/lavahound3.bmp 255 255 255 0
+lavahound images/lavahound4.bmp 255 255 255 0
