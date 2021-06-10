@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Scanner;
 
 import processing.core.*;
@@ -111,6 +112,13 @@ public final class VirtualWorld extends PApplet
                 if (world.withinBounds(lavaTile))
                 {
                     world.setBackground(lavaTile, new Background("lava", imageStore.getImageList("lava")));
+                }
+
+                if (world.isOccupied(lavaTile)) {
+                    Optional<Entity> occupant = world.getOccupant(lavaTile);
+                    if (occupant.get() instanceof Entity) {
+                        world.removeEntity(occupant.get());
+                    }
                 }
             }
         }
