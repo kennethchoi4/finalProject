@@ -48,9 +48,9 @@ public class Factory {
     public static Skeleton createSkeleton(
             String id,
             Point position,
+            List<PImage> images,
             int actionPeriod,
-            int animationPeriod,
-            List<PImage> images)
+            int animationPeriod)
     {
         return new Skeleton(id, position, images, actionPeriod,
                 animationPeriod);

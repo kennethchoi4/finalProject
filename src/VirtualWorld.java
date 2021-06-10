@@ -116,9 +116,15 @@ public final class VirtualWorld extends PApplet
 
                 if (world.isOccupied(lavaTile)) {
                     Optional<Entity> occupant = world.getOccupant(lavaTile);
-                    if (occupant.get() instanceof Entity) {
+                    if (occupant.get() instanceof Entity && !(occupant.get() instanceof MinerEntity)) {
                         world.removeEntity(occupant.get());
                     }
+                    if (occupant.get() instanceof MinerEntity){
+                        Point pos = occupant.get().position();
+                        world.removeEntity(occupant.get());
+                        Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 4, 5);
+                    }
+
                 }
             }
         }
