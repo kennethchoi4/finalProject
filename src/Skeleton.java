@@ -33,10 +33,10 @@ public class Skeleton extends MovingEntity{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        Optional<Entity> minerTarget =
-                findNearest(world, this.position(), MinerEntity.class);
+        Optional<Entity> skeletonTarget =
+                findNearest(world, this.position(), OreBlob.class);
 
-        if (!minerTarget.isPresent())
+        if (!skeletonTarget.isPresent())
         {
 
             scheduler.scheduleEvent(this,
