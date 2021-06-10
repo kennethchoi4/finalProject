@@ -119,7 +119,7 @@ public final class VirtualWorld extends PApplet
 
                 if (world.isOccupied(lavaTile)) {
                     Optional<Entity> occupant = world.getOccupant(lavaTile);
-                    if (occupant.get() instanceof Entity && !(occupant.get() instanceof MinerEntity) && !(occupant.get() instanceof Skeleton)) {
+                    if (occupant.get() instanceof Entity && !(occupant.get() instanceof MinerEntity) && !(occupant.get() instanceof Skeleton) && !(occupant.get() instanceof LavaHound)) {
                         world.removeEntity(occupant.get());
                         scheduler.unscheduleAllEvents(occupant.get());
                     }
@@ -127,7 +127,7 @@ public final class VirtualWorld extends PApplet
                         Point pos = occupant.get().position();
                         world.removeEntity(occupant.get());
                         scheduler.unscheduleAllEvents(occupant.get());
-                        Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 200, 5);
+                        Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 800, 5);
                         world.addEntity(skeleton);
                         skeleton.scheduleActions(scheduler, world, imageStore);
                     }
@@ -154,11 +154,11 @@ public final class VirtualWorld extends PApplet
             p2 = points.get(index2);
             p2 = new Point(p2.x + pointRand, p2.y + pointRand);
         }
-        LavaHound hound1 = Factory.createLavaHound("lavaHound", p1, imageStore.getImageList("lavahound"), 700, 5);
+        LavaHound hound1 = Factory.createLavaHound("lavaHound", p1, imageStore.getImageList("lavahound"), 1300, 5);
         world.addEntity(hound1);
         hound1.scheduleActions(scheduler, world, imageStore);
 
-        LavaHound hound2 = Factory.createLavaHound("lavaHound", p2, imageStore.getImageList("lavahound"), 700, 5);
+        LavaHound hound2 = Factory.createLavaHound("lavaHound", p2, imageStore.getImageList("lavahound"), 1300, 5);
         world.addEntity(hound2);
         hound2.scheduleActions(scheduler, world, imageStore);
     }

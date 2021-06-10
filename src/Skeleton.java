@@ -35,6 +35,9 @@ public class Skeleton extends MovingEntity{
     {
         Optional<Entity> skeletonTarget =
                 findNearest(world, this.position(), MinerNotFull.class);
+        Optional<Entity> skeletonSecondTarget =
+                findNearest(world, this.position(), OreBlob.class);
+
         long nextPeriod = this.actionPeriod();
 
 
@@ -44,7 +47,16 @@ public class Skeleton extends MovingEntity{
             if (this.moveToSkeleton(world, skeletonTarget.get(), scheduler)) {
                 world.removeEntity(skeletonTarget.get());
                 scheduler.unscheduleAllEvents(skeletonTarget.get());
-                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 200, 5);
+                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 800, 5);
+                world.addEntity(skeleton);
+                skeleton.scheduleActions(scheduler, world, imageStore);
+            }
+        } else if (skeletonSecondTarget.isPresent()){
+            Point pos = skeletonSecondTarget.get().position();
+            if (this.moveToSkeleton(world, skeletonSecondTarget.get(), scheduler)) {
+                world.removeEntity(skeletonSecondTarget.get());
+                scheduler.unscheduleAllEvents(skeletonSecondTarget.get());
+                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 800, 5);
                 world.addEntity(skeleton);
                 skeleton.scheduleActions(scheduler, world, imageStore);
             }
