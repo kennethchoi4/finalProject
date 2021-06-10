@@ -2,12 +2,10 @@ public final class Point
 {
     public final int x;
     public final int y;
-    public boolean isLava;
 
-    public Point(int x, int y, boolean isLava) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        this.isLava = isLava;
     }
 
     public String toString() {
@@ -37,4 +35,5 @@ public final class Point
     {
         return Math.sqrt(Math.pow(this.x - end.x, 2) + Math.pow(this.y - end.y, 2) * 1.00);
     }
+
 }

@@ -107,7 +107,7 @@ public final class VirtualWorld extends PApplet
 
         for (int i = -1; i <= 1; i++){
             for (int j = -1; j <= 1; j++) {
-                Point lavaTile = new Point(pressed.x + i, pressed.y + j, true);
+                Point lavaTile = new Point(pressed.x + i, pressed.y + j);
                 if (world.withinBounds(lavaTile))
                 {
                     world.setBackground(lavaTile, new Background("lava", imageStore.getImageList("lava")));
@@ -116,7 +116,7 @@ public final class VirtualWorld extends PApplet
         }
     }
 
-    private Point mouseToPoint(int x, int y) { return new Point(mouseX/TILE_WIDTH + view.getViewport().col(), mouseY/TILE_HEIGHT + view.getViewport().row(), false);}
+    private Point mouseToPoint(int x, int y) { return new Point(mouseX/TILE_WIDTH + view.getViewport().col(), mouseY/TILE_HEIGHT + view.getViewport().row());}
 
     public static Background createDefaultBackground(ImageStore imageStore) {
         return new Background(DEFAULT_IMAGE_NAME,

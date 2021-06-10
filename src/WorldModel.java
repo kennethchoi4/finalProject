@@ -92,7 +92,7 @@ public final class WorldModel
         return this.occupancy[pos.y][pos.x];
     }
 
-    private Background getBackgroundCell(Point pos) {
+    public Background getBackgroundCell(Point pos) {
         return this.background[pos.y][pos.x];
     }
 
@@ -144,7 +144,7 @@ public final class WorldModel
     public Optional<Point> findOpenAround(Point pos) {
         for (int dy = -ORE_REACH; dy <= ORE_REACH; dy++) {
             for (int dx = -ORE_REACH; dx <= ORE_REACH; dx++) {
-                Point newPt = new Point(pos.x + dx, pos.y + dy, pos.isLava);
+                Point newPt = new Point(pos.x + dx, pos.y + dy);
                 if (this.withinBounds(newPt) && !this.isOccupied(newPt)) {
                     return Optional.of(newPt);
                 }

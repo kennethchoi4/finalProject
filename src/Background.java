@@ -17,5 +17,9 @@ public final class Background
         return this.images.get(this.imageIndex);
     }
 
+    public String getId(){
+        return this.id;
+    }
+
 
 }
