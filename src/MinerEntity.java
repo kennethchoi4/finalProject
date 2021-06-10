@@ -42,8 +42,7 @@ public abstract class MinerEntity extends MovingEntity{
         */
 
 
-        Predicate<Point> params = (Point point) -> (!(world.isOccupied(point)) && world.withinBounds(point) &&
-                !(world.getBackgroundCell(point).getId() == "lava"));
+        Predicate<Point> params = (Point point) -> (!(world.isOccupied(point)) && world.withinBounds(point) && !(world.getBackgroundCell(point).getId().equals("lava")));
         BiPredicate<Point, Point> reach = Functions::adjacent;
         AStarPathingStrategy strat = new AStarPathingStrategy();
 

@@ -157,7 +157,7 @@ public class OreBlob extends MovingEntity{
 
         //CACA POOPOOO MEMEMEMEMMEMEMPOOOOOO
 
-        Predicate<Point> params = (Point point) -> (!(world.getOccupant(point).isPresent()) || (world.getOccupant(point).isPresent() && world.getOccupant(point).get().getClass() == Ore.class));
+        Predicate<Point> params = (Point point) -> (!(world.isOccupied(point)) && world.withinBounds(point) && !(world.getBackgroundCell(point).getId().equals("lava"))) || (world.getOccupant(point).isPresent() && world.getOccupant(point).get().getClass() == Ore.class);
         BiPredicate<Point, Point> reach = Functions::adjacent;
         AStarPathingStrategy strat = new AStarPathingStrategy();
 

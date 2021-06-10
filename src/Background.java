@@ -21,5 +21,4 @@ public final class Background
         return this.id;
     }
 
-
 }
