@@ -33,15 +33,50 @@ public class LavaHound extends MovingEntity{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        Optional<Entity> skeletonTarget =
+        Optional<Entity> lavaHoundTarget =
                 findNearest(world, this.position(), Skeleton.class);
 
-        if (!skeletonTarget.isPresent())
+        if (lavaHoundTarget.isPresent())
         {
+            Point pos = lavaHoundTarget.get().position();
+
+            if (this.moveToLavaHound(world, lavaHoundTarget.get(), scheduler)) {
+                world.removeEntity(lavaHoundTarget.get());
+                scheduler.unscheduleAllEvents(lavaHoundTarget.get());
+                //MinerNotFull miner = Factory.createMinerNotFull("miner", 4, pos, 5, 6, imageStore.getImageList("miner"));
+                //world.addEntity(miner);
+                //miner.scheduleActions(scheduler, world, imageStore);
+            }
+        }
 
             scheduler.scheduleEvent(this,
                     Factory.createActivityAction(this, world, imageStore),
                     this.actionPeriod());
+    }
+
+    private boolean moveToLavaHound(
+            WorldModel world,
+            Entity target,
+            EventScheduler scheduler)
+    {
+        if (Functions.adjacent(this.position(), target.position())) {
+            world.removeEntity(target);
+            scheduler.unscheduleAllEvents(target);
+
+            return true;
+        }
+        else {
+            Point nextPos = this.nextPositionLavaHound(world, target.position());
+
+            if (!this.position().equals(nextPos)) {
+                Optional<Entity> occupant = world.getOccupant(nextPos);
+                if (occupant.isPresent()) {
+                    scheduler.unscheduleAllEvents(occupant.get());
+                }
+
+                world.moveEntity(this, nextPos);
+            }
+            return false;
         }
     }
 

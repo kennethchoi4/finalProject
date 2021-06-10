@@ -59,9 +59,9 @@ public class Factory {
     public static LavaHound createLavaHound(
             String id,
             Point position,
+            List<PImage> images,
             int actionPeriod,
-            int animationPeriod,
-            List<PImage> images)
+            int animationPeriod)
     {
         return new LavaHound(id, position, images, actionPeriod,
                 animationPeriod);

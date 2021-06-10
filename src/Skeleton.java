@@ -44,7 +44,7 @@ public class Skeleton extends MovingEntity{
             if (this.moveToSkeleton(world, skeletonTarget.get(), scheduler)) {
                 world.removeEntity(skeletonTarget.get());
                 scheduler.unscheduleAllEvents(skeletonTarget.get());
-                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 5, 6);
+                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 200, 5);
                 world.addEntity(skeleton);
                 skeleton.scheduleActions(scheduler, world, imageStore);
             }

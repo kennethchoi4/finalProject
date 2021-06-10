@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Scanner;
 
 import processing.core.*;
@@ -106,12 +107,14 @@ public final class VirtualWorld extends PApplet
     {
         Point pressed = mouseToPoint(mouseX, mouseY);
 
+        ArrayList<Point> points = new ArrayList<>();
         for (int i = -1; i <= 1; i++){
             for (int j = -1; j <= 1; j++) {
                 Point lavaTile = new Point(pressed.x + i, pressed.y + j);
                 if (world.withinBounds(lavaTile))
                 {
                     world.setBackground(lavaTile, new Background("lava", imageStore.getImageList("lava")));
+                    points.add(lavaTile);
                 }
 
                 if (world.isOccupied(lavaTile)) {
@@ -124,14 +127,40 @@ public final class VirtualWorld extends PApplet
                         Point pos = occupant.get().position();
                         world.removeEntity(occupant.get());
                         scheduler.unscheduleAllEvents(occupant.get());
-                        Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 5, 6);
+                        Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 200, 5);
                         world.addEntity(skeleton);
                         skeleton.scheduleActions(scheduler, world, imageStore);
                     }
-
                 }
             }
         }
+
+        //Creates lavahound
+        Random rand = new Random();
+        int pointRand = rand.nextInt(10);
+        int index1 = rand.nextInt(points.size());
+        Point p1 = points.get(index1);
+        p1 = new Point(p1.x + pointRand, p1.y + pointRand);
+        while (world.isOccupied(p1) && world.getOccupant(p1).get() instanceof MinerEntity){
+            index1 = rand.nextInt(points.size());
+            p1 = points.get(index1);
+            p1 = new Point(p1.x + pointRand, p1.y + pointRand);
+        }
+        int index2 = rand.nextInt(points.size());
+        Point p2 = points.get(index2);
+        p2 = new Point(p2.x + pointRand, p2.y + pointRand);
+        while (world.isOccupied(p2) && world.getOccupant(p2).get() instanceof MinerEntity && p1.equals(p2)){
+            index2 = rand.nextInt(points.size());
+            p2 = points.get(index2);
+            p2 = new Point(p2.x + pointRand, p2.y + pointRand);
+        }
+        LavaHound hound1 = Factory.createLavaHound("lavaHound", p1, imageStore.getImageList("lavahound"), 700, 5);
+        world.addEntity(hound1);
+        hound1.scheduleActions(scheduler, world, imageStore);
+
+        LavaHound hound2 = Factory.createLavaHound("lavaHound", p2, imageStore.getImageList("lavahound"), 700, 5);
+        world.addEntity(hound2);
+        hound2.scheduleActions(scheduler, world, imageStore);
     }
 
     private Point mouseToPoint(int x, int y) { return new Point(mouseX/TILE_WIDTH + view.getViewport().col(), mouseY/TILE_HEIGHT + view.getViewport().row());}
