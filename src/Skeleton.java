@@ -34,14 +34,50 @@ public class Skeleton extends MovingEntity{
             EventScheduler scheduler)
     {
         Optional<Entity> skeletonTarget =
-                findNearest(world, this.position(), OreBlob.class);
+                findNearest(world, this.position(), MinerNotFull.class);
+        long nextPeriod = this.actionPeriod();
 
-        if (!skeletonTarget.isPresent())
-        {
 
-            scheduler.scheduleEvent(this,
-                    Factory.createActivityAction(this, world, imageStore),
-                    this.actionPeriod());
+        if (skeletonTarget.isPresent()) {
+            Point pos = skeletonTarget.get().position();
+
+            if (this.moveToSkeleton(world, skeletonTarget.get(), scheduler)) {
+                world.removeEntity(skeletonTarget.get());
+                scheduler.unscheduleAllEvents(skeletonTarget.get());
+                Skeleton skeleton = Factory.createSkeleton("skeleton", pos, imageStore.getImageList("skeleton"), 5, 6);
+                world.addEntity(skeleton);
+                skeleton.scheduleActions(scheduler, world, imageStore);
+            }
+        }
+
+        scheduler.scheduleEvent(this,
+                Factory.createActivityAction(this, world, imageStore),
+                nextPeriod);
+    }
+
+    private boolean moveToSkeleton(
+            WorldModel world,
+            Entity target,
+            EventScheduler scheduler)
+    {
+        if (Functions.adjacent(this.position(), target.position())) {
+            world.removeEntity(target);
+            scheduler.unscheduleAllEvents(target);
+
+            return true;
+        }
+        else {
+            Point nextPos = this.nextPositionSkeleton(world, target.position());
+
+            if (!this.position().equals(nextPos)) {
+                Optional<Entity> occupant = world.getOccupant(nextPos);
+                if (occupant.isPresent()) {
+                    scheduler.unscheduleAllEvents(occupant.get());
+                }
+
+                world.moveEntity(this, nextPos);
+            }
+            return false;
         }
     }
 
