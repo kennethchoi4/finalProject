@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import processing.core.*;
@@ -99,6 +100,23 @@ public final class VirtualWorld extends PApplet
             view.shiftView(dx, dy);
         }
     }
+
+    public void mousePressed()
+    {
+        Point pressed = mouseToPoint(mouseX, mouseY);
+
+        for (int i = -1; i <= 1; i++){
+            for (int j = -1; j <= 1; j++) {
+                Point lavaTile = new Point(pressed.x + i, pressed.y + j, true);
+                if (world.withinBounds(lavaTile))
+                {
+                    world.setBackground(lavaTile, new Background("lava", imageStore.getImageList("lava")));
+                }
+            }
+        }
+    }
+
+    private Point mouseToPoint(int x, int y) { return new Point(mouseX/TILE_WIDTH + view.getViewport().col(), mouseY/TILE_HEIGHT + view.getViewport().row(), false);}
 
     public static Background createDefaultBackground(ImageStore imageStore) {
         return new Background(DEFAULT_IMAGE_NAME,

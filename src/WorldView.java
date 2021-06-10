@@ -31,7 +31,7 @@ public final class WorldView
             for (int col = 0; col < this.viewport.numCols(); col++) {
                 Point worldPoint = this.viewport.viewportToWorld(col, row);
                 Optional<PImage> image =
-                        this.world.getBackgroundImage( worldPoint);
+                        this.world.getBackgroundImage( worldPoint );
                 if (image.isPresent()) {
                     this.screen.image(image.get(), col * this.tileWidth,
                             row * this.tileHeight);
@@ -67,5 +67,5 @@ public final class WorldView
         this.viewport.shift(newCol, newRow);
     }
 
-
+    public Viewport getViewport() { return this.viewport; }
 }
